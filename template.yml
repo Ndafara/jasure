@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Resources:
+    DailyScheduled:
+      Type: AWS::Serverless::Function
+      Properties:
+        CodeUri: daily_scheduled/
+        Handler: daily_scheduled.app
+        Runtime:  python3.7
+        Events:
+          CheckWebsiteScheduledEvent:
+            Type: Schedule
+            Properties:
+              Schedule: cron(30, 4, *, *, ?, *)
+    WeeklyScheduled:
+      Type: AWS::Serverless::Function
+      Properties:
+        CodeUri: weekly_scheduled/
+        Handler: weekly_scheduled.app
+        Runtime:  python3.7
+        Events:
+          CheckWebsiteScheduledEvent:
+            Type: Schedule
+            Properties:
+              Schedule: cron(30, 4, *, *, ?, *)

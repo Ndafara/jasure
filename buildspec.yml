@@ -1,0 +1,18 @@
+version: 0.2
+env:
+  variables:
+    BUCKET: "jasure-assessment"
+phases:
+  install:
+    runtime-versions:
+        python: 3.7
+  build:
+    commands:
+      - pip install -r ./daily_scheduled/requirements.txt -t ./daily_scheduled
+      - pip install -r ./weekly_scheduled/requirements.txt -t ./weekly_scheduled
+      - aws cloudformation package --template-file template.yml --s3-bucket $BUCKET --output-template-file outputtemplate.yml
+artifacts:
+  type: zip
+  files:
+    - template.yml
+    - outputtemplate.yml
